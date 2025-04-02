@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZUTRIVA BALANCE PAYMENT</title>
+    <style>
+       body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: url('image.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: -1; /* Puts the background behind all content */
+    font-family: Arial, sans-serif;
+
+}
+
+        .container {
+            max-width: 90%;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            margin: 10px auto;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+        .container {
+            width: 40%;
+            margin: 20px auto;
+        }
+        .container1, .container2 {
+            width: 42%;
+            margin: 20px auto;
+        }
+        .container2 {
+            background-color: transparent;
+        }
+        .submit-btn {
+            background: #007BFF;
+            color: white;
+            font-size: 16px;
+            border: none;
+            padding: 6px 12px;
+            cursor: pointer;
+            border-radius: 5px;
+            width: auto;
+            display: block;
+            margin-left: auto;
+        }
+       @media (max-width: 1080px) {
+    body, html {
+        min-height: 100vh; /* Ensure full height */
+        overflow-x: hidden; /* Prevent horizontal scroll */
+    }
+
+    body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-image: url('image1.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        z-index: -1; /* Keeps background behind content */
+    }
+
+    .container {
+        width: 85%;
+        margin: 20px auto;
+    }
+
+    .container1, .container2 {
+        width: 94%;
+        margin: 20px auto;
+    }
+}
+
+        img {
+            width: 100%;
+            max-width: 100%;
+            display: block;
+            margin: 0 auto 20px;
+            border-radius: 10px;
+        }
+        ::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        p, h1, h2, h4, h3 {
+            color: white;
+            text-align: center;
+        }
+        h1 { font-size: 20px; }
+        h2 { font-size: 16px; text-align: left; }
+        h3 { font-size: 14px; }
+        label {
+            font-size: 16px;
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+            text-align: left;
+            color: white;
+        }
+        select, input, button {
+            width: 95%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            outline: none;
+            color: white;
+        }
+        select option {
+            background: #001f3f;
+            color: white;
+        }
+        button {
+            background: #000080;
+            color: white;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover { background: #0056b3; }
+    </style>
+</head>
+<body>
+    <div class="container1">
+        <img src="logo.jpg" alt="Zutriva Logo">
+    </div>
+    <div class="container">
+        <h1>ZUTRIVA!</h1>
+        <h3>BALANCE PAYMENT</h3>
+    </div>
+    <div class="container">
+        <label>Name</label>
+        <input type="text" id="name">
+        <label>Mobile Number</label>
+        <input type="text" id="mobile">
+        <label>WhatsApp Number</label>
+        <input type="text" id="whatsapp">
+        <label>Already Paid Invoice Number</label>
+        <input type="text" id="advpay" placeholder="Eg: TRZ25032901H" style="color: white;">
+    </div>
+    <div class="container">
+        <label>Tour Type</label>
+        <select id="tour-type">
+            <option value="" selected disabled>Choose</option>
+            <option value="group">Group Tour</option>
+            <option value="couple">Couple Tour</option>
+            <option value="family">Family Tour</option>
+        </select>
+        <label>No. of Adults</label>
+        <input type="number" id="adults" min="1">
+        <label>No. of Children</label>
+        <p style="text-align: left; font-size: 14px;">Children Age should be 13 or Under 13</p>
+        <input type="number" id="children" min="0" value="0">
+        <label>Child Proof (e.g., Aadhaar)</label>
+        <input type="file" id="child-proof" accept="image/*">
+    </div>
+    <div class="container" id="from-madurai">
+        <h4>FROM MADURAI</h4>
+        <label>Tour Category</label>
+        <select id="tour-category">
+            <option value="" selected disabled>Choose</option>
+            <option value="beach">Beach Journeys</option>
+            <option value="hills">Hills Station Trips</option>
+            <option value="temple">Temple Tours</option>
+        </select>
+        <label>Available Tours</label>
+        <select id="tour-list">
+            <option value="" selected disabled>Choose</option>
+        </select>
+    </div>
+    <div class="container" id="payment-container">
+        <h2>Proceeding to Pay Balance Amount</h2>
+        <p style="text-align: left; font-size: 14px;">If Advance Paid Per Adult: ₹1000 Then</p>
+        <p style="text-align: left; font-size: 14px;">Paid advance for <span id="advance-adults">0</span> Adult: ₹<span id="advance-amount">0</span></p>
+        <p style="text-align: left; font-size: 14px;">Adult price: ₹<span id="adult-price">0</span></p>
+        <p style="text-align: left; font-size: 14px;">Child price: ₹<span id="child-price">0</span></p>
+        <p style="text-align: left; font-size: 14px;">Total Amount: ₹<span id="total-full-amount">0</span></p>
+        <p style="text-align: left; font-size: 14px;">Balance Amount for <span id="total-adults">0</span> Adults and <span id="total-children">0</span> Children: ₹<span id="total-amount">0</span></p>
+        <button id="upi-button" style="background: #B8860B; color: white; font-size: 16px; border: none; padding: 6px 12px; cursor: pointer; border-radius: 5px; width: auto; display: block; margin: 10px auto;">
+            Pay Balance
+        </button>
+    </div>
+    <div class="container" id="qr-container">
+        <h2>Upload Payment Screenshot</h2>
+        <input type="file" id="payment-proof" accept="image/*">
+    </div>
+    <div class="container2">
+        <button id="submit-btn" class="submit-btn">Submit</button>
+    </div>
+<p style="text-align: center; font-size: 12px;">© 2025 All Rights Reserved By Zutriva</p>
+    <script>
+        // Package prices based on tour type (in INR)
+        const packagePrices = {
+            "couple": {
+                "Mahabalipuram Beach Journey": 17700,
+                "Dhanushkodi Beach Journey": 10900,
+                "Thoothukudi Beach Journey": 10100,
+                "Kanyakumari Beach Journey": 13000,
+                "Chidambaram Beach Journey": 16200,
+                "Velankanni Beach Journey": 12600,
+                "Kolli Hills Station Trip": 13600,
+                "Kodaikanal Hills Station Trip": 10000,
+                "Ooty Hills Station Trip": 12700,
+                "Valparai Hills Station Trip": 13300,
+                "Yercaud Hills Station Trip": 14300,
+                "Arupadai Murugan Temple Tour": 35500,
+                "Kanyakumari Temple Tour": 13000,
+                "Coimbatore Temple Tour": 11500,
+                "Chidambaram Temple Tour": 16200,
+                "Kumbakonam Temple Tour": 12500,
+                "Rameshwaram Temple Tour": 10900,
+                "Srirangam Temple Tour": 9300,
+                "Thanjavur Temple Tour": 11200,
+                "Thiruvannamalai Temple Tour": 15000,
+                "Velankanni Temple Tour": 13300
+            },
+            "family": {
+                "Mahabalipuram Beach Journey": 10800,
+                "Dhanushkodi Beach Journey": 7500,
+                "Thoothukudi Beach Journey": 8000,
+                "Kanyakumari Beach Journey": 9000,
+                "Chidambaram Beach Journey": 9900,
+                "Velankanni Beach Journey": 8200,
+                "Kolli Hills Station Trip": 8750,
+                "Kodaikanal Hills Station Trip": 7000,
+                "Ooty Hills Station Trip": 8300,
+                "Valparai Hills Station Trip": 8600,
+                "Yercaud Hills Station Trip": 9100,
+                "Arupadai Murugan Temple Tour": 22000,
+                "Kanyakumari Temple Tour": 9000,
+                "Coimbatore Temple Tour": 8000,
+                "Chidambaram Temple Tour": 9900,
+                "Kumbakonam Temple Tour": 8100,
+                "Rameshwaram Temple Tour": 7500,
+                "Srirangam Temple Tour": 7100,
+                "Thanjavur Temple Tour": 7500,
+                "Thiruvannamalai Temple Tour": 9500,
+                "Velankanni Temple Tour": 8200
+            },
+            "group": {
+                "Mahabalipuram Beach Journey": 6400,
+                "Dhanushkodi Beach Journey": 5000,
+                "Thoothukudi Beach Journey": 4800,
+                "Kanyakumari Beach Journey": 5300,
+                "Chidambaram Beach Journey": 6100,
+                "Velankanni Beach Journey": 5600,
+                "Kolli Hills Station Trip": 5500,
+                "Kodaikanal Hills Station Trip": 4800,
+                "Ooty Hills Station Trip": 5500,
+                "Valparai Hills Station Trip": 5800,
+                "Yercaud Hills Station Trip": 5700,
+                "Arupadai Murugan Temple Tour": 13600,
+                "Kanyakumari Temple Tour": 5300,
+                "Coimbatore Temple Tour": 5200,
+                "Chidambaram Temple Tour": 6100,
+                "Kumbakonam Temple Tour": 5300,
+                "Rameshwaram Temple Tour": 5000,
+                "Srirangam Temple Tour": 4700,
+                "Thanjavur Temple Tour": 5000,
+                "Thiruvannamalai Temple Tour": 5800,
+                "Velankanni Temple Tour": 8200
+            }
+        };
+
+        document.getElementById("submit-btn").addEventListener("click", function(event) {
+            event.preventDefault();
+            let submitButton = document.getElementById("submit-btn");
+            submitButton.disabled = true;
+            submitButton.textContent = "Submitting...";
+            submitButton.style.background = "#888";
+
+            let requiredFields = [
+                { id: "name", message: "Name is required." },
+                { id: "mobile", message: "Mobile Number is required." },
+                { id: "whatsapp", message: "WhatsApp Number is required." },
+                { id: "tour-type", message: "Tour Type is required." },
+                { id: "adults", message: "Number of Adults is required." },
+                { id: "advpay", message: "Advance Payment Invoice No. is required." },
+                { id: "tour-category", message: "Tour Category is required." },
+                { id: "tour-list", message: "You must select an available tour." },
+                { id: "payment-proof", message: "Payment proof is required." }
+            ];
+
+            let children = parseInt(document.getElementById("children").value) || 0;
+            if (children > 0 && document.getElementById("tour-type").value !== "couple") {
+                requiredFields.push(
+                    { id: "child-proof", message: "Child proof (e.g., Aadhaar) is required when children are included." }
+                );
+            }
+
+            for (let field of requiredFields) {
+                let inputElement = document.getElementById(field.id);
+                if (!inputElement.value.trim()) {
+                    alert(field.message);
+                    inputElement.focus();
+                    submitButton.disabled = false;
+                    submitButton.textContent = "Submit";
+                    submitButton.style.background = "#007BFF";
+                    return;
+                }
+            }
+
+            let name = document.getElementById("name").value.trim();
+            let mobile = document.getElementById("mobile").value.trim();
+            let whatsapp = document.getElementById("whatsapp").value.trim();
+            let tourType = document.getElementById("tour-type").value;
+            let adults = document.getElementById("adults").value;
+            let advpay = document.getElementById("advpay").value;
+            let tourCategory = document.getElementById("tour-category").value;
+            let tourList = document.getElementById("tour-list").value;
+            let paymentProof = document.getElementById("payment-proof").files[0];
+            let childProof = (children > 0 && tourType !== "couple") ? document.getElementById("child-proof").files[0] : null;
+
+            let readerPayment = new FileReader();
+            readerPayment.readAsDataURL(paymentProof);
+            readerPayment.onload = function() {
+                let base64Payment = readerPayment.result.split(',')[1];
+
+                if (childProof) {
+                    let readerChild = new FileReader();
+                    readerChild.readAsDataURL(childProof);
+                    readerChild.onload = function() {
+                        let base64Child = readerChild.result.split(',')[1];
+                        submitData(name, mobile, whatsapp, tourType, adults, children, advpay, tourCategory, tourList, base64Payment, paymentProof, base64Child, childProof);
+                    };
+                } else {
+                    submitData(name, mobile, whatsapp, tourType, adults, children, advpay, tourCategory, tourList, base64Payment, paymentProof, null, null);
+                }
+            };
+        });
+
+        function submitData(name, mobile, whatsapp, tourType, adults, children, advpay, tourCategory, tourList, base64Payment, paymentProof, base64Child, childProof) {
+            let data = {
+                name: name,
+                mobile: mobile,
+                whatsapp: whatsapp,
+                tourType: tourType,
+                adults: adults,
+                children: children,
+                advpay: advpay,
+                tourCategory: tourCategory,
+                tourList: tourList,
+                paymentImage: base64Payment,
+                paymentMimeType: paymentProof.type,
+                paymentImageName: paymentProof.name
+            };
+            if (base64Child) {
+                data.childProofImage = base64Child;
+                data.childProofMimeType = childProof.type;
+                data.childProofImageName = childProof.name;
+            }
+
+            fetch("https://script.google.com/macros/s/AKfycbwqyWis7u_sUql-IG70Z1Bnf9NIRtVy1irNTL29zK9PRTYvoh22QglRipURc586JjGstA/exec", {
+                method: "POST",
+                body: JSON.stringify(data),
+                headers: { "Content-Type": "application/json" },
+                mode: "no-cors"
+            })
+            .then(() => {
+                alert("Booking submitted successfully!");
+                document.getElementById("name").value = "";
+                document.getElementById("mobile").value = "";
+                document.getElementById("whatsapp").value = "";
+                document.getElementById("tour-type").value = "";
+                document.getElementById("adults").value = "";
+                document.getElementById("children").value = "0";
+                document.getElementById("advpay").value = "";
+                document.getElementById("tour-category").value = "";
+                document.getElementById("tour-list").value = "";
+                document.getElementById("payment-proof").value = "";
+                document.getElementById("child-proof").value = "";
+                document.getElementById("advance-adults").textContent = "0";
+                document.getElementById("advance-amount").textContent = "0";
+                document.getElementById("adult-price").textContent = "0";
+                document.getElementById("child-price").textContent = "0";
+                document.getElementById("total-full-amount").textContent = "0";
+                document.getElementById("total-adults").textContent = "0";
+                document.getElementById("total-children").textContent = "0";
+                document.getElementById("total-amount").textContent = "0";
+                let submitButton = document.getElementById("submit-btn");
+                setTimeout(() => {
+                    submitButton.disabled = false;
+                    submitButton.textContent = "Submit";
+                    submitButton.style.background = "#007BFF";
+                }, 500);
+            })
+            .catch(error => {
+                alert("Error: " + error.message);
+                let submitButton = document.getElementById("submit-btn");
+                submitButton.disabled = false;
+                submitButton.textContent = "Submit";
+                submitButton.style.background = "#007BFF";
+            });
+        }
+
+        document.getElementById("tour-category").addEventListener("change", function() {
+            let tourCategory = this.value;
+            let tourList = document.getElementById("tour-list");
+            tourList.innerHTML = "<option value='' selected disabled>Choose</option>";
+
+            const tours = {
+                "beach": [
+                    "Mahabalipuram Beach Journey",
+                    "Dhanushkodi Beach Journey",
+                    "Thoothukudi Beach Journey",
+                    "Kanyakumari Beach Journey",
+                    "Chidambaram Beach Journey",
+                    "Velankanni Beach Journey"
+                ],
+                "hills": [
+                    "Kolli Hills Station Trip",
+                    "Kodaikanal Hills Station Trip",
+                    "Ooty Hills Station Trip",
+                    "Valparai Hills Station Trip",
+                    "Yercaud Hills Station Trip"
+                ],
+                "temple": [
+                    "Arupadai Murugan Temple Tour",
+                    "Kanyakumari Temple Tour",
+                    "Coimbatore Temple Tour",
+                    "Chidambaram Temple Tour",
+                    "Kumbakonam Temple Tour",
+                    "Rameshwaram Temple Tour",
+                    "Srirangam Temple Tour",
+                    "Thanjavur Temple Tour",
+                    "Thiruvannamalai Temple Tour",
+                    "Velankanni Temple Tour"
+                ]
+            };
+
+            if (tours[tourCategory]) {
+                tours[tourCategory].forEach(tour => {
+                    let option = document.createElement("option");
+                    option.value = tour;
+                    option.textContent = tour;
+                    tourList.appendChild(option);
+                });
+            }
+        });
+
+        function updateBalance() {
+            let tourType = document.getElementById("tour-type").value;
+            let selectedTour = document.getElementById("tour-list").value;
+            let adults = parseInt(document.getElementById("adults").value) || 0;
+            let children = parseInt(document.getElementById("children").value) || 0;
+
+            // Enforce adult limits based on tour type
+            if (tourType === "couple" && adults > 2) {
+                alert("Couples Can,t Be Above Two Right!");
+                document.getElementById("adults").value = "2";
+                adults = 2;
+            } else if (tourType === "family" && adults > 4) {
+                alert("Family Tours are limited to 4 persons For Private Tour or Join Group tour if opened or Contact 6374979879 for larger private tours.");
+                document.getElementById("adults").value = "4";
+                adults = 4;
+            } else if (tourType === "group" && adults > 20) {
+                alert("Contact 6374979879 to book above 20 persons for a private tour");
+                document.getElementById("adults").value = "20";
+                adults = 20;
+            }
+
+            // If Couple Tour is selected, reset children to 0 and alert if necessary
+            if (tourType === "couple" && children > 0) {
+                alert("Children are not applicable for Couple Tours.");
+                document.getElementById("children").value = "0";
+                children = 0;
+            }
+
+            let packageAmount = packagePrices[tourType] && packagePrices[tourType][selectedTour] ? packagePrices[tourType][selectedTour] : 0;
+            let childPrice = tourType === "couple" ? 0 : packageAmount / 2; // Child price is 0 for Couple, otherwise half of package
+            let totalFullAmount = (packageAmount * adults) + (childPrice * children); // Total amount before advance deduction
+            let adultBalance = (packageAmount - 1000) * adults; // Balance per adult after advance
+            let childBalance = childPrice * children; // No advance deduction for children
+            let totalBalance = adultBalance + childBalance; // Total balance to pay
+            let advancePaid = 1000 * adults; // Advance paid for adults
+
+            document.getElementById("advance-adults").textContent = adults;
+            document.getElementById("advance-amount").textContent = advancePaid;
+            document.getElementById("adult-price").textContent = packageAmount;
+            document.getElementById("child-price").textContent = childPrice;
+            document.getElementById("total-full-amount").textContent = totalFullAmount;
+            document.getElementById("total-adults").textContent = adults;
+            document.getElementById("total-children").textContent = children;
+            document.getElementById("total-amount").textContent = totalBalance;
+
+            document.getElementById("upi-button").onclick = function() {
+                window.location.href = `upi://pay?pa=harish2k0318-2@okicici&pn=Zutriva&am=${totalBalance}&cu=INR&tn=Balance%20Payment%20to%20Zutriva`;
+            };
+        }
+
+        document.getElementById("tour-type").addEventListener("change", function() {
+            let tourType = this.value;
+            let adults = parseInt(document.getElementById("adults").value) || 0;
+            if (tourType === "couple" && adults > 2) {
+                alert("Couples Can,t Be Above Two Right!");
+                document.getElementById("adults").value = "2";
+            } else if (tourType === "family" && adults > 4) {
+                alert("Family Tours are limited to 4 persons For Private Tour or Join Group tour if opened or Contact 6374979879 for larger private tours.");
+                document.getElementById("adults").value = "4";
+            } else if (tourType === "group" && adults > 20) {
+                alert("Contact 6374979879 to book above 20 persons for a private tour");
+                document.getElementById("adults").value = "20";
+            }
+            if (tourType === "couple" && parseInt(document.getElementById("children").value) > 0) {
+                alert("Children are not applicable for Couple Tours.");
+                document.getElementById("children").value = "0";
+            }
+            updateBalance();
+        });
+        document.getElementById("tour-list").addEventListener("change", updateBalance);
+        document.getElementById("adults").addEventListener("input", function() {
+            let tourType = document.getElementById("tour-type").value;
+            let adults = parseInt(this.value) || 0;
+            if (tourType === "couple" && adults > 2) {
+                alert("Couple Tour Can't Be Above 2");
+                this.value = "2";
+            } else if (tourType === "family" && adults > 4) {
+                alert("Family Tours are limited to 4 persons For Private Tour or Join Group tour if opened or Contact 6374979879 for larger private tours.");
+                this.value = "4";
+            } else if (tourType === "group" && adults > 20) {
+                alert("Contact 6374979879 to book above 20 persons for a private tour");
+                this.value = "20";
+            }
+            updateBalance();
+        });
+        document.getElementById("children").addEventListener("input", function() {
+            let tourType = document.getElementById("tour-type").value;
+            if (tourType === "couple" && parseInt(this.value) > 0) {
+                alert("Children are not applicable for Couple Tours.");
+                this.value = "0";
+            }
+            updateBalance();
+        });
+    </script>
+</body>
+</html>
