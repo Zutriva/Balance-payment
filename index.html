@@ -21,6 +21,17 @@
 
 }
 
+html, body {
+    min-height: 100vh; /* Ensures full height */
+    display: flex;
+    flex-direction: column;
+}
+
+.container2 {
+    margin-top: auto; /* Pushes footer to bottom when content is less */
+}
+
+
         .container {
             max-width: 90%;
             background: rgba(255, 255, 255, 0.1);
@@ -204,8 +215,9 @@
     <div class="container2">
         <button id="submit-btn" class="submit-btn">Submit</button>
     </div>
-<p style="text-align: center; font-size: 12px;">© 2025 All Rights Reserved By Zutriva</p>
-    <script>
+<div class="container2" style=" text-align: center; padding: 10px 0; font-size: 12px;">
+    <p>© 2025 All Rights Reserved By Zutriva</p>
+</div>    <script>
         // Package prices based on tour type (in INR)
         const packagePrices = {
             "couple": {
