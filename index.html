@@ -157,11 +157,9 @@
         <label>No. of Children</label>
         <p style="text-align: left; font-size: 14px;">Children Age should be 13 or Under 13</p>
         <input type="number" id="children" min="0" value="0">
-        <label>Child Proof (e.g., Aadhaar)</label>
-        <input type="file" id="child-proof" accept="image/*">
     </div>
     <div class="container">
- <label>Tour Type</label>
+        <label>Tour Type</label>
         <select id="tour-type">
             <option value="" selected disabled>Choose</option>
             <option value="group">Group Tour</option>
@@ -174,7 +172,6 @@
         <select id="group-tour-select">
             <option value="" selected disabled>Choose</option>
             <option value="2025-05-01|madurai|hills|Kodaikanal Hills Station Trip">01-05-2025 Madurai to Kodaikanal Hills Station Trip</option>
-
         </select>
     </div>
     <div class="container">
@@ -222,7 +219,8 @@
     </div>
 
     <div class="container2">
-<p style="text-align: center; padding: 10px 0; font-size: 12px;">© 2025 All Rights Reserved By Zutriva</p>    </div>
+        <p style="text-align: center; padding: 10px 0; font-size: 12px;">© 2025 All Rights Reserved By Zutriva</p>
+    </div>
 
     <script>
         const packagePrices = {
@@ -307,7 +305,6 @@
             let departureSelect = document.getElementById("departure");
             let groupTourSelect = document.getElementById("group-tour-select");
 
-            // Reset fields
             travelDate.value = "";
             departureSelect.value = "";
             tourCategory.value = "";
@@ -329,7 +326,7 @@
                 departureSelect.disabled = false;
                 tourCategory.disabled = false;
                 tourList.disabled = false;
-                fromMadurai.style.display = "block"; // Show for non-group tours
+                fromMadurai.style.display = "block";
             }
 
             let adults = parseInt(document.getElementById("adults").value) || 0;
@@ -552,13 +549,6 @@
                 { id: "payment-proof", message: "Payment proof is required." }
             ];
 
-            let children = parseInt(document.getElementById("children").value) || 0;
-            if (children > 0 && document.getElementById("tour-type").value !== "couple") {
-                requiredFields.push(
-                    { id: "child-proof", message: "Child proof (e.g., Aadhaar) is required when children are included." }
-                );
-            }
-
             for (let field of requiredFields) {
                 let inputElement = document.getElementById(field.id);
                 if (!inputElement.value.trim()) {
@@ -576,103 +566,81 @@
             let whatsapp = document.getElementById("whatsapp").value.trim();
             let tourType = document.getElementById("tour-type").value;
             let adults = document.getElementById("adults").value;
+            let children = document.getElementById("children").value;
             let advpay = document.getElementById("advpay").value;
             let travelDate = document.getElementById("travel-date").value;
             let departure = document.getElementById("departure").value;
             let tourCategory = document.getElementById("tour-category").value;
             let tourList = document.getElementById("tour-list").value;
             let paymentProof = document.getElementById("payment-proof").files[0];
-            let childProof = (children > 0 && tourType !== "couple") ? document.getElementById("child-proof").files[0] : null;
 
             let readerPayment = new FileReader();
             readerPayment.readAsDataURL(paymentProof);
             readerPayment.onload = function() {
                 let base64Payment = readerPayment.result.split(',')[1];
+                let data = {
+                    name: name,
+                    mobile: mobile,
+                    whatsapp: whatsapp,
+                    tourType: tourType,
+                    adults: adults,
+                    children: children,
+                    advpay: advpay,
+                    travelDate: travelDate,
+                    departure: departure,
+                    tourCategory: tourCategory,
+                    tourList: tourList,
+                    paymentImage: base64Payment,
+                    paymentMimeType: paymentProof.type,
+                    paymentImageName: paymentProof.name
+                };
 
-                if (childProof) {
-                    let readerChild = new FileReader();
-                    readerChild.readAsDataURL(childProof);
-                    readerChild.onload = function() {
-                        let base64Child = readerChild.result.split(',')[1];
-                        submitData(name, mobile, whatsapp, tourType, adults, children, advpay, travelDate, departure, tourCategory, tourList, base64Payment, paymentProof, base64Child, childProof);
-                    };
-                } else {
-                    submitData(name, mobile, whatsapp, tourType, adults, children, advpay, travelDate, departure, tourCategory, tourList, base64Payment, paymentProof, null, null);
-                }
-            };
-        });
-
-        function submitData(name, mobile, whatsapp, tourType, adults, children, advpay, travelDate, departure, tourCategory, tourList, base64Payment, paymentProof, base64Child, childProof) {
-            let data = {
-                name: name,
-                mobile: mobile,
-                whatsapp: whatsapp,
-                tourType: tourType,
-                adults: adults,
-                children: children,
-                advpay: advpay,
-                travelDate: travelDate,
-                departure: departure,
-                tourCategory: tourCategory,
-                tourList: tourList,
-                paymentImage: base64Payment,
-                paymentMimeType: paymentProof.type,
-                paymentImageName: paymentProof.name
-            };
-            if (base64Child) {
-                data.childProofImage = base64Child;
-                data.childProofMimeType = childProof.type;
-                data.childProofImageName = childProof.name;
-            }
-
-            fetch("https://script.google.com/macros/s/AKfycbwqyWis7u_sUql-IG70Z1Bnf9NIRtVy1irNTL29zK9PRTYvoh22QglRipURc586JjGstA/exec", {
-                method: "POST",
-                body: JSON.stringify(data),
-                headers: { "Content-Type": "application/json" },
-                mode: "no-cors"
-            })
-            .then(() => {
-                alert("Booking submitted successfully!");
-                document.getElementById("name").value = "";
-                document.getElementById("mobile").value = "";
-                document.getElementById("whatsapp").value = "";
-                document.getElementById("tour-type").value = "";
-                document.getElementById("adults").value = "";
-                document.getElementById("children").value = "0";
-                document.getElementById("advpay").value = "";
-                document.getElementById("travel-date").value = "";
-                document.getElementById("departure").value = "";
-                document.getElementById("tour-category").value = "";
-                document.getElementById("tour-list").value = "";
-                document.getElementById("payment-proof").value = "";
-                document.getElementById("child-proof").value = "";
-                document.getElementById("group-tour-options").style.display = "none";
-                document.getElementById("from-madurai").style.display = "none";
-                document.getElementById("payment-container").style.display = "none";
-                document.getElementById("qr-container").style.display = "none";
-                document.getElementById("advance-adults").textContent = "0";
-                document.getElementById("advance-amount").textContent = "0";
-                document.getElementById("adult-price").textContent = "0";
-                document.getElementById("child-price").textContent = "0";
-                document.getElementById("total-full-amount").textContent = "0";
-                document.getElementById("total-adults").textContent = "0";
-                document.getElementById("total-children").textContent = "0";
-                document.getElementById("total-amount").textContent = "0";
-                let submitButton = document.getElementById("submit-btn");
-                setTimeout(() => {
+                fetch("https://script.google.com/macros/s/AKfycbxyCEmpqtZ8v-0o0YV2TKrZM_W_qecLcUbmjLXtRJE5WhaicVoxUhEjYGQbOXVu3v1pZQ/exec", {
+                    method: "POST",
+                    body: JSON.stringify(data),
+                    headers: { "Content-Type": "application/json" },
+                    mode: "no-cors"
+                })
+                .then(() => {
+                    alert("Booking submitted successfully!");
+                    document.getElementById("name").value = "";
+                    document.getElementById("mobile").value = "";
+                    document.getElementById("whatsapp").value = "";
+                    document.getElementById("tour-type").value = "";
+                    document.getElementById("adults").value = "";
+                    document.getElementById("children").value = "0";
+                    document.getElementById("advpay").value = "";
+                    document.getElementById("travel-date").value = "";
+                    document.getElementById("departure").value = "";
+                    document.getElementById("tour-category").value = "";
+                    document.getElementById("tour-list").value = "";
+                    document.getElementById("payment-proof").value = "";
+                    document.getElementById("group-tour-options").style.display = "none";
+                    document.getElementById("from-madurai").style.display = "none";
+                    document.getElementById("payment-container").style.display = "none";
+                    document.getElementById("qr-container").style.display = "none";
+                    document.getElementById("advance-adults").textContent = "0";
+                    document.getElementById("advance-amount").textContent = "0";
+                    document.getElementById("adult-price").textContent = "0";
+                    document.getElementById("child-price").textContent = "0";
+                    document.getElementById("total-full-amount").textContent = "0";
+                    document.getElementById("total-adults").textContent = "0";
+                    document.getElementById("total-children").textContent = "0";
+                    document.getElementById("total-amount").textContent = "0";
+                    setTimeout(() => {
+                        submitButton.disabled = false;
+                        submitButton.textContent = "Submit";
+                        submitButton.style.background = "#007BFF";
+                    }, 500);
+                })
+                .catch(error => {
+                    alert("Error: " + error.message);
                     submitButton.disabled = false;
                     submitButton.textContent = "Submit";
                     submitButton.style.background = "#007BFF";
-                }, 500);
-            })
-            .catch(error => {
-                alert("Error: " + error.message);
-                let submitButton = document.getElementById("submit-btn");
-                submitButton.disabled = false;
-                submitButton.textContent = "Submit";
-                submitButton.style.background = "#007BFF";
-            });
-        }
+                });
+            };
+        });
     </script>
-</body>
+    </body>
 </html>
