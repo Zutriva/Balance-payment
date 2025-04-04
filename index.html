@@ -41,6 +41,29 @@
         .container2 {
             background-color: transparent;
         }
+
+.checkbox-group {
+        display: flex;
+        align-items: center;
+        margin: 10px 0;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+        width: 16px;
+        height: 16px;
+        margin-right: 8px;
+        background-color: white;
+        border: 1px solid #ccc;
+        outline: none;
+        box-shadow: none;
+        cursor: pointer;
+    }
+
+    .checkbox-group label {
+        margin: 0;
+        cursor: pointer;
+    }
+
         .submit-btn {
             background: #007BFF;
             color: white;
@@ -146,6 +169,10 @@
         <input type="text" id="name">
         <label>Mobile Number</label>
         <input type="text" id="mobile">
+    <div class="checkbox-group">
+        <input type="checkbox" id="sameNumber" onclick="fillWhatsAppNumber()">
+        <label for="sameNumber">WhatsApp same as Mobile</label>
+    </div>
         <label>WhatsApp Number</label>
         <input type="text" id="whatsapp">
         <label>Already Paid Invoice Number</label>
@@ -223,6 +250,28 @@
     </div>
 
     <script>
+
+ function fillWhatsAppNumber() {
+        const mobile = document.getElementById('mobile').value;
+        const checkbox = document.getElementById('sameNumber');
+        const whatsapp = document.getElementById('whatsapp');
+
+        if (checkbox.checked) {
+            whatsapp.value = mobile;
+            whatsapp.readOnly = true;
+        } else {
+            whatsapp.value = "";
+            whatsapp.readOnly = false;
+        }
+    }
+
+    function syncWhatsAppCheckbox() {
+        const checkbox = document.getElementById('sameNumber');
+        if (checkbox.checked) {
+            fillWhatsAppNumber(); // keep WhatsApp updated if typing in Mobile
+        }
+    }
+
         const packagePrices = {
             "couple": {
                 "Mahabalipuram Beach Journey": 17700,
