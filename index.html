@@ -182,8 +182,8 @@
         <label>No. of Adults</label>
         <input type="number" id="adults" min="1">
         <label>No. of Children</label>
-        <p style="text-align: left; font-size: 14px;">Children Age should be 13 or Under 13</p>
-        <input type="number" id="children" min="0" value="0">
+    <p style="text-align: left; font-size: 14px;">Children Age should be 13 or Under 13</p>
+    <input type="number" id="children" min="0" value="0" oninput="showHideChildPrice()">
     </div>
     <div class="container">
         <label>Tour Type</label>
@@ -230,7 +230,9 @@
         <p style="text-align: left; font-size: 14px;">If Advance Paid Per Adult: ₹1000 Then</p>
         <p style="text-align: left; font-size: 14px;">Paid advance for <span id="advance-adults">0</span> Adult: ₹<span id="advance-amount">0</span></p>
         <p style="text-align: left; font-size: 14px;">Adult price: ₹<span id="adult-price">0</span></p>
-        <p style="text-align: left; font-size: 14px;">Child price: ₹<span id="child-price">0</span></p>
+        <p id="child-price-line" style="text-align: left; font-size: 14px; display: none;">
+    Child price: ₹<span id="child-price">0</span>
+</p>
         <p style="text-align: left; font-size: 14px;">Total Amount: ₹<span id="total-full-amount">0</span></p>
         <p style="text-align: left; font-size: 14px;">Balance Amount for <span id="total-adults">0</span> Adults and <span id="total-children">0</span> Children: ₹<span id="total-amount">0</span></p>
         <button id="upi-button" style="background: #B8860B; color: white; font-size: 16px; border: none; padding: 6px 12px; cursor: pointer; border-radius: 5px; width: auto; display: block; margin: 10px auto;">
@@ -251,6 +253,12 @@
 
     <script>
 
+function showHideChildPrice() {
+    const children = document.getElementById("children").value;
+    const line = document.getElementById("child-price-line");
+    line.style.display = (children >= 1) ? "block" : "none";
+}
+        
  function fillWhatsAppNumber() {
         const mobile = document.getElementById('mobile').value;
         const checkbox = document.getElementById('sameNumber');
